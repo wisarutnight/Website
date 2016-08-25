@@ -1,0 +1,17 @@
+@charset "utf-8";
+body {
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	background-color: #FFFFCC;
+}
+#footer {
+	background-color: #000000;
+	padding-right: 40px;
+	font-family: Arial;
+	font-size: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: right;
+}
