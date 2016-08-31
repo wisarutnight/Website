@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['Admin']))
 {
 	header('Location: index.html');
 	die();
@@ -33,7 +33,7 @@ body  { background-color : FFFFCC }
       <li><a href="menu.php">Home</a></li>
       <li><a href="menu2.php">แบบตอบรับ</a></li>
 	  <li><a href="setmeet.php">เพิ่มการประชุม</a></li>
-      <li><a href="menu4.php">ประวัติการประชุม</a></li>
+      <li><a href="menu4.php">ส่งอีเมล</a></li>
 	  <li><a href="menu5.php">สถานะการตอบรับ</a></li>
 	  <li><a href="menu6.php">แก้ไขข้อมูลบุคลากร</a></li>
 	  <li class="active"><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
@@ -71,13 +71,13 @@ echo db()->error; ?>
 
 <table class="table table-hover">
 	<tr>
-		<td>ลำดับ</td>
-		<td>ชื่อ</td>
-		<td>นามสกุล</td>
-		<td>ตำแหน่ง</td>
-		<td>เบอร์โทรศัพท์</td>
-		<td>ประเภทกรรมการ</td>
-		<td>สถานะกรรมการ</td>
+		<td><center>ลำดับ</center></td>
+		<td><center>ชื่อ</center></td>
+		<td><center>นามสกุล</center></td>
+		<td><center>ตำแหน่ง</center></td>
+		<td><center>เบอร์โทรศัพท์</center></td>
+		<td><center>ประเภทกรรมการ</center></td>
+		<td><center>สถานะ</center></td>
 	</tr>
 <?php 
 	
@@ -86,15 +86,15 @@ while(list($no, $userId, $username, $password, $status, $first, $name, $sername,
 {
 ?>
 <tr>
-		<td><?php echo $no;?></td>
+		<td><center><?php echo $no;?></center></td>
 		<td><?php echo $first," ", $name;?></td>
 		<td><?php echo $sername;?></td>
 		<td><?php echo $position;?></td>
-		<td><?php echo $telephone;?></td>
-		<td><?php if ($statusnow == 1){ echo "กรรมการสภาวิชาการ";}
-										else{ echo "ผู้เข้าร่วมประชุม";}?></td>
-		<td><?php if ($statusnow == 1){ echo "ปัจจุบัน";}
-										else{ echo "หมดวาระ";}?></td>
+		<td><center><?php echo $telephone;?></center></td>
+		<td><center><?php if ($statusnow == 1){ echo "กรรมการสภาวิชาการ";}
+										else{ echo "ผู้เข้าร่วมประชุม";}?></center></td>
+		<td><center><?php if ($statusnow == 1){ echo "ปัจจุบัน";}
+										else{ echo "หมดวาระ";}?></center></td>
 </tr>
 <?php
 }

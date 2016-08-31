@@ -5,7 +5,7 @@
 </head>
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['Admin']))
 {
 	header('Location: index.html');
 	die();
@@ -15,10 +15,14 @@ connect_db();
 
 $meeting= $_POST['meeting'];
 
-if($meeting==2){
+if($meeting==3){
 $nomeeting= $_POST['nomeeting'];
 if ($nomeeting==1){
 	$other= $_POST['other'];
+	$commentother= "";
+}
+if ($nomeeting==2){
+	$other= "";
 	$commentother= "";
 }elseif($nomeeting==3){
 	$commentother= $_POST['other2'];
@@ -27,12 +31,12 @@ if ($nomeeting==1){
 }else{
 $nomeeting=0;
 $other= "";
-	$commentother= "";
+$commentother= "";
 }
 $statusmeeting= 1;
 $idautodatastart= $_POST['idautostart'];
 $userId=$_SESSION['userIdtest'];
-$fromtype=1;
+$fromtype=2;
 $telnow=$_POST['telnow'];
 $plane= $_POST['plane'];
 $from1= $_POST['from'];

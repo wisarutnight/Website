@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['Admin']))
 {
 	header('Location: index.html');
 	die();
@@ -19,16 +19,18 @@ connect_db();
 $query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, telephone, statusnow, category, datein, dateout FROM users WHERE userId = "'.$_GET['userId'].'"');
 list($no, $userId, $username, $password, $status, $first, $name, $sername, $position, $tel, $telephone, $statusnow, $category, $datein, $dateout) = $query->fetch_row();
 
-
 ?>
+
 <!doctype html>
-<html lang="en"
+<html lang="en">
+<title>แบบตอบรับการเข้าประชุมออนไลน์</title>
  <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link href="style.css" rel="stylesheet" type="text/css">
  </head>
  <body>
  <div class="container">
@@ -221,8 +223,6 @@ while ($data = $query->fetch_array())
   </div>
 </div>
 
-  
-<a style="display:scroll;position:fixed;bottom:5px;right:5px;" class="backtotop" href="#" rel="nofollow" title="Back to Top"><img style="border:0;" src="top.png"/></a>
   <script src="js/jquery-1.11.3.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
  </body>

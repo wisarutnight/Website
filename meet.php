@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['Admin']))
 {
 	header('Location: index.html');
 	die();
@@ -12,12 +12,14 @@ connect_db();
 
 <table class="table table-hover">
 	<tr>
-		<td>ลำดับ</td>
-		<td>ชื่อ</td>
-		<td>นามสกุล</td>
-		<td>ตำแหน่ง</td>
-		<td>เบอร์โทรศัพท์</td>
-		<td>สถานะการตอบรับ</td>
+		<td><center>ลำดับ</center></td>
+		<td><center>ชื่อ</center></td>
+		<td><center>นามสกุล</center></td>
+		<td><center>ตำแหน่ง</center></td>
+		<td><center>เบอร์โทรศัพท์</center></td>
+		<td><center>สถานะการตอบรับ</center></td>
+		<td><center>ดูแบบตอบรับ</center></td>
+
 	</tr>
 <?php 
 	
@@ -26,11 +28,11 @@ while(list($no, $userId, $username, $password, $status, $first, $name, $sername,
 {
 ?>
 <tr>
-		<td><?php echo $no;?></td>
+		<td><center><?php echo $no;?></center></td>
 		<td><?php echo $first," ",$name;?></td>
 		<td><?php echo $sername;?></td>
 		<td><?php echo $position;?></td>
-		<td><?php echo $telephone;?></td>
+		<td><center><?php echo $telephone;?></center></td>
 		<?php
 		$query1 = db()->query('SELECT idautodatastart, userId FROM tbllog WHERE idautodatastart="'.$_POST['id'].'" and userId="'.$userId.'"');
 		echo db()->error;
@@ -42,6 +44,7 @@ while(list($no, $userId, $username, $password, $status, $first, $name, $sername,
 				echo "ยังไม่ได้ส่ง";	
 			}
 			?></td>
+		<td><center><a href="stamt.php?userId=<?php echo $userId;?>">ดู</center></a></td>
 </tr>
 <?php
 }

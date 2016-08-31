@@ -5,7 +5,7 @@
 </head>
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['User1']))
 {
 	header('Location: index.html');
 	die();
@@ -20,14 +20,20 @@ $nomeeting= $_POST['nomeeting'];
 if ($nomeeting==1){
 	$other= $_POST['other'];
 	$commentother= "";
+}
+if ($nomeeting==2){
+	$other= "";
+	$commentother= "";
 }elseif($nomeeting==3){
 	$commentother= $_POST['other2'];
 	$other= "";
 }
 }else{
 $nomeeting=0;
-
+$other= "";
+$commentother= "";
 }
+
 $statusmeeting= 1;
 $idautodatastart= $_POST['idautostart'];
 $userId=$_SESSION['userIdtest'];

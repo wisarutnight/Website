@@ -1,11 +1,12 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['Admin']))
 {
 	header('Location: index.html');
 	die();
 }
 ?>
+<link href="style.css" rel="stylesheet" type="text/css">
 <?php
 include 'config.php'; 
 connect_db();

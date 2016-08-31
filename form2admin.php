@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['Admin']))
 {
 	header('Location: index.html');
 	die();
@@ -28,16 +28,19 @@ body  { background-color : FFFFCC }
     <div class="navbar-header">
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="menuUser.php">Home</a></li>
-      <li class="active"><a href="form.php">แบบตอบรับ</a></li>
-      <li><a href="myUser.php">ข้อมูลส่วนตัว</a></li>
-	  <li><a href="info.php">ติดต่อสอบถาม</a></li>
+      <li><a href="menu.php">Home</a></li>
+      <li class="active"><a href="menu2.php">แบบตอบรับ</a></li>
+	  <li><a href="setmeet.php">เพิ่มการประชุม</a></li>
+      <li><a href="menu4.php">ประวัติการประชุม</a></li>
+	  <li><a href="menu5.php">สถานะการตอบรับ</a></li>
+	  <li><a href="menu6.php">แก้ไขข้อมูลบุคลากร</a></li>
+	  <li><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
 <?php	$query = db()->query('SELECT * FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 echo db()->error; ?>
-      <li><a href="myUser.php"><span class="glyphicon glyphicon-user"></span> <?php echo $data['first']." ".$data['name'];?></a></li>
+      <li><a href="menu3.php"><span class="glyphicon glyphicon-user"></span> <?php echo $data['first']." ".$data['name'];?></a></li>
       <li><a href="logout.php"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
     </ul>
   </div>
@@ -135,7 +138,7 @@ echo db()->error;
   </tr>
   <tr>
     <td height="42">2.</td>
-    <td colspan="6" align="left"><input name="meeting" type="radio" value="2"> ไม่สามารถเข้าประชุมได้</td>
+    <td colspan="6" align="left"><input name="meeting" type="radio" value="3"> ไม่สามารถเข้าประชุมได้</td>
   </tr>
   <tr>
     <td height="36">&nbsp;</td>

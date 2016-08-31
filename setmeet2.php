@@ -8,6 +8,17 @@ if(!isset($_SESSION['Admin']))
 include 'config.php';
 connect_db();
 ?>
+
+<?php
+$query = db()->query('SELECT statusmeeting FROM tbldatastart');
+$statusmeeting= 0;
+
+$s = sprintf('UPDATE tbldatastart SET statusmeeting="$s"',$statusmeeting);
+db()->query($s);
+echo db()->error;
+?>
+
+
 <title>แบบตอบรับการเข้าประชุมออนไลน์</title>
 <head>
   <meta charset="UTF-8">
@@ -18,33 +29,6 @@ connect_db();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <link href="style.css" rel="stylesheet" type="text/css">
-
-<script type="text/javascript">
-$(document).ready(function()
-{
-//change page
-$("#round").change(function()
-{
-var id=$(this).val();
-var dataString = 'id='+ id;
-$.ajax
-({
-type: "POST",
-url: "../11/meet.php",
-data: dataString,
-cache: false,
-success: function(html)
-{
-$("#show").html(html);
-} 
-});
-
-});
-});
-
-
-
-</script>
  </head>
 <style type="text/css">
 
@@ -52,7 +36,6 @@ body  { background-color : FFFFCC }
 
 </style>			
 <link href="style.css" rel="stylesheet">
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -60,9 +43,9 @@ body  { background-color : FFFFCC }
     <ul class="nav navbar-nav">
       <li><a href="menu.php">Home</a></li>
       <li><a href="menu2.php">แบบตอบรับ</a></li>
-	  <li><a href="setmeet.php">เพิ่มการประชุม</a></li>
+	  <li class="active"><a href="setmeet.php">เพิ่มการประชุม</a></li>
       <li><a href="menu4.php">ส่งอีเมล</a></li>
-	  <li class="active"><a href="menu5.php">สถานะการตอบรับ</a></li>
+	  <li><a href="menu5.php">สถานะการตอบรับ</a></li>
 	  <li><a href="menu6.php">แก้ไขข้อมูลบุคลากร</a></li>
 	  <li><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
     </ul>
@@ -86,46 +69,93 @@ echo db()->error; ?>
     z-index: 99;  
 }  
 </style>
-<div class="container">
+
+<?php
+
+$query = db()->query('SELECT round, date, time, place, statusmeeting FROM tbldatastart');
+list($round, $date, $time, $place, $statusmeeting) = $query->fetch_row();
+
+?>
+
+ <body>
+ <div class="container">
 	<div class="row">
-	<form class="form-horizontal">
+	<form class="form-horizontal" action="putmeeting.php" method="post">
 
 	<div class="form-group">
-		<div class="col-sm-6"></div>
-		<div class="bg-primary">สถานะการตอบรับ</div>
+		<div class="col-sm-5"></div>
+
+   </FONT>
 		<div class="col-sm-6">
 		</div>
 	</div>
 
-<div class="dropdown">
-<div class="col-sm-4">ครั้งที่
-<select class="form-control" id="round" name="round">
-<option>เลือกครั้งที่ประชุม</option>
-<?php 
+	<div class="form-group" >
+	<label  class="col-sm-4 control-label" >ครั้งที่ : </label>
+	<div class="col-sm-4">
+	<input type="number" name="round" class="form-control" value="">
+	 </div>
+	 </div>
+
+	<div class="form-group">
+		<label class="col-sm-4 control-label" >วันที่ : </label>
+		<div class="col-sm-4">
+			<input type="text" name="date" class="form-control" value="">
+		</div>
+	</div>
+	  
+	<div class="form-group">
+		<label class="col-sm-4 control-label" >เวลา : </label>
+			<div class="col-sm-4">
+		<input type="time" name="time" class="form-control" value="">
+		</div>
+	</div>
 	
-$query = db()->query('SELECT idautodatastart, round FROM tbldatastart ORDER BY round DESC');
-echo db()->error;
-while ($data = $query->fetch_array())
-{
-?>
-<option value="<?php echo $data['idautodatastart'];?>"><?php echo $data['round'];?></option>
-<?php
-}
-?>
-</select>
+	<div class="form-group">
+	<label class="col-sm-4 control-label" >สถานที่ : </label>
+	<div class="col-sm-4">
+		<input type="text" name="place" class="form-control" value="">
 	 </div>
 	 </div>
 
-<div id="show"></div>
+	<div class="form-group" >
+	<label  class="col-sm-4 control-label" >สถานะ : </label>
+	<div class="col-sm-4">
+		<select class="form-control" id="statusmeeting" name="statusmeeting">
+			<?php 
+					
+				$query = db()->query('SELECT mtname, mtstatus FROM setmeeting');
+				echo db()->error;
+				while ($data = $query->fetch_array())
+				{
+				?>
+					<option value="<?php echo $data['mtstatus'];?>"><?php echo $data['mtname'];?></option>
+				<?php
+				}
+				?>
+		</select>
+	</div>
+	</div>
 
-</center>
-<br></br>
-<br></br>
+
+
+<div class="form-group">
+	<div class="col-sm-5"></div>
+	<div class="col-sm-7">
+	<input a class="btn btn-primary btn-lg" type="submit" value="เพิ่ม"></a></div>       
+</div>
+  </form>
+  </div>
+</div>
+
 <div id="footer">
 <center><font color="white">ระบบส่งแบบตอบรับการเข้าประชุมออนไลน์</font>
 		<font color="white">สภาวิชาการมหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา</font>
 		<br><font color="white">ติดต่อสอบถาม : pimparn@rmutl.ac.th</font></br>
 	</center></div>
 </div>
-
-	
+  
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+ </body>
+</html>

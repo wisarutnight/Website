@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['Admin']))
 {
 	header('Location: index.html');
 	die();
@@ -34,7 +34,7 @@ body  { background-color : FFFFCC }
       <li><a href="menu.php">Home</a></li>
       <li><a href="menu2.php">แบบตอบรับ</a></li>
 	  <li><a href="setmeet.php">เพิ่มการประชุม</a></li>
-      <li><a href="menu4.php">ประวัติการประชุม</a></li>
+      <li><a href="menu4.php">ส่งอีเมล</a></li>
 	  <li><a href="menu5.php">สถานะการตอบรับ</a></li>
 	  <li class="active"><a href="menu6.php">แก้ไขข้อมูลบุคลากร</a></li>
 	  <li><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
@@ -71,16 +71,21 @@ echo db()->error; ?>
 		<div class="col-sm-6">
 		</div>
 </div>
-<a href="menu8.php"><h5 align="right">เพิ่มผู้ใช้งาน</h3></a>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-primary"><span class="badge">+</span> เพิ่มผู้ใช้งาน</button>
+  <button type="button" class="btn btn-primary"><span class="badge">-</span> ลบ</button>
+</div>
+
+<a href="menu8.php"><h5 align="right">เพิ่มผู้ใช้งาน</h5></a>
 <table class="table table-hover">
 	<tr>
-		<td>ลำดับ</td>
-		<td>คำนำหน้า</td>
-		<td>ชื่อ</td>
-		<td>นามสกุล</td>
-		<td>ตำแหน่ง</td>
-		<td>สถานะ</td>
-		<td>แก้ไขข้อมูล</td>
+		<td><center>ลำดับ</center></td>
+		<td><center>ชื่อ</center></td>
+		<td><center>นามสกุล</center></td>
+		<td><center>ตำแหน่ง</center></td>
+		<td><center>สถานะ</center></td>
+		<td><center>แก้ไขข้อมูล</center></td>
 	</tr>
 <?php 
 	
@@ -89,16 +94,15 @@ while(list($no, $userId, $username, $password, $status, $first, $name, $sername,
 {
 ?>
 <tr>
-		<td><?php echo $no;?></td>
-		<td><?php echo $first;?></td>
-		<td><?php echo $name;?></td>
+		<td><center><?php echo $no;?></center></td>
+		<td><?php echo $first," ",$name;?></td>
 		<td><?php echo $sername;?></td>
 		<td><?php echo $position;?></td>
 		<td><?php if ($status == 1){ echo "Admin";}
 				  elseif ($status == 2){ echo "User";}
 				  elseif ($status == 3){ echo "User2";}
 				  else { echo "ไม่ได้ลงทะเบียน";}?></td>
-		<td><a href="edit.php?userId=<?php echo $userId;?>">แก้ไข </a></td>
+		<td><center><a href="edit.php?userId=<?php echo $userId;?>">แก้ไข </a></center></td>
 </tr>
 <?php
 }
@@ -111,4 +115,3 @@ while(list($no, $userId, $username, $password, $status, $first, $name, $sername,
 		<br><font color="white">ติดต่อสอบถาม : pimparn@rmutl.ac.th</font></br>
 	</center></div>
 </div>
-<a style="display:scroll;position:fixed;bottom:5px;right:5px;" class="backtotop" href="#" rel="nofollow" title="Back to Top"><img style="border:0;" src="top.png"/></a>

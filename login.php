@@ -19,15 +19,20 @@ $data = $query->fetch_array();
 $_SESSION['userIdtest']=$data['userId'];
 
 if ($data['status'] == 1){
-	$_SESSION['status'] = "Admin";
+	/*$_SESSION['status'] = "Admin";*/
+	$_SESSION['Admin'] = "Admin";
 	echo "<meta http-equiv='refresh' content='1;URL=menu.php'>";
 }elseif ($data['status'] == 2){
-	$_SESSION['status'] = "User";
+	/*$_SESSION['status'] = "User";*/
+	$_SESSION['User'] = "User";
+	$_SESSION['User1'] = "User1";
 	echo "<meta http-equiv='refresh' content='1;URL=menuUser.php'>";
 }
 elseif ($data['status'] == 3){
-	$_SESSION['status'] = "User";
-	echo "<meta http-equiv='refresh' content='1;URL=menuUser2.php'>";
+	/*$_SESSION['status'] = "User2";*/
+	$_SESSION['User'] = "User";
+	$_SESSION['User2'] = "User2";
+	echo "<meta http-equiv='refresh' content='1;URL=menuUser.php'>";
 }
 /*$num = $query->num_rows;
 if($num <= 0){

@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['User2']))
 {
 	header('Location: index.html');
 	die();
@@ -28,8 +28,21 @@ body  { background-color : FFFFCC }
     <div class="navbar-header">
     </div>
     <ul class="nav navbar-nav">
-      <li class="active"><a href="menuUser.php">Home</a></li>
-      <li><a href="form.php">แบบตอบรับ</a></li>
+      <li><a href="menuUser.php">Home</a></li>
+      <li class="active"><a href="<?php
+					$query = db()->query('SELECT status FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
+					$data = $query->fetch_array();
+								{
+								echo db()->error;
+								if ($data['status'] == 2){
+								echo "form.php";
+								}elseif ($data['status'] == 3){
+								echo "form2.php";
+								}
+									?>
+									<?php
+										}
+									?>">แบบตอบรับ</a></li>
       <li><a href="myUser.php">ข้อมูลส่วนตัว</a></li>
 	  <li><a href="info.php">ติดต่อสอบถาม</a></li>
     </ul>
@@ -53,21 +66,19 @@ div.iBannerFix{
     z-index: 99;  
 }  
 </style>
-
 <?php
-$query = db()->query('SELECT mt FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
+$query = db()->query('SELECT statusmeeting FROM tbllog WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 			{
 			echo db()->error;
-			if ($data['mt'] == 1){ echo "ส่งแบบตอบรับแล้ว";}
+			if ($data['statusmeeting'] == 1){ echo "ส่งแบบตอบรับแล้ว";}
 							else{ echo "ยังไม่ได้ส่งแบบตอบรับ";}
 ?>
 <?php
 			}
 ?>
-
 <center>
-<form name="form1" action="finish2.php" method="post">
+<form name="form" action="finish2.php" method="post">
 <br><TABLE height=50 cellSpacing=1 cellPadding=0 width="1200" bgColor=FFFFFF border=0>
 	
 	<TBODY>
@@ -79,7 +90,9 @@ $data = $query->fetch_array();
 while(list($idautodatastart, $round, $date, $time, $place, $statusmeeting) = $query->fetch_row())
 {
 echo db()->error;
-if ($statusmeeting == 1){ echo $round;}
+if ($statusmeeting == 1){ echo $round;
+$idtest=$idautodatastart;
+}
 							else{ echo "";}
 ?>
 <?php
@@ -131,34 +144,36 @@ echo db()->error;
   </tr>
   <tr>
     <td width="20" height="41">1.</td>
-    <td colspan="6" align="left"><input name="meeting" type="radio" value="เข้าประชุมได้"> เข้าประชุมได้</td>
+    <td colspan="6" align="left"><input name="meeting" type="radio" value="1"  checked="checked" > เข้าประชุมได้</td>
   </tr>
   <tr>
     <td height="42">2.</td>
-    <td colspan="6" align="left"><input name="meeting" type="radio" value="ไม่สามารถเข้าประชุมได้"> ไม่สามารถเข้าประชุมได้</td>
+    <td colspan="6" align="left"><input name="meeting" type="radio" value="3"> ไม่สามารถเข้าประชุมได้</td>
   </tr>
   <tr>
     <td height="36">&nbsp;</td>
     <td width="27">&nbsp;</td>
     <td width="99">เนื่องจาก</td>
-    <td colspan="4"><input name="nomeeting" type="radio" value="nomeeting"> ไปราชการ <input type="text" name="other" id="other"></td>
+    <td colspan="4"><input name="nomeeting" type="radio" value="1"> ไปราชการ 
+	<input type="text" name="other" id="other"></td>
   </tr>
   <tr>
     <td height="34">&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td colspan="4"><input name="nomeeting" type="radio" value="nomeeting"> ลาพักผ่อน / ลากิจ / ลาป่วย</td>
+    <td colspan="4"><input name="nomeeting" type="radio" value="2"> ลาพักผ่อน / ลากิจ / ลาป่วย</td>
   </tr>
   <tr>
     <td height="32">&nbsp;</td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
-    <td colspan="4"><input name="nomeeting" type="radio" value="nomeeting"> อื่นๆ <input type="text" name="other" id="other"></td>
+    <td colspan="4"><input name="nomeeting" type="radio" value="3"> อื่นๆ 
+	<input type="text" name="other2" id="other"></td>
   </tr>
   <tr>
     <td height="37">3.</td>
     <td colspan="6">รายละเอียดเดินทางเข้าประชุม เดินทางโดย</td>
-  </tr>
+    </tr>
   <tr>
     <td height="35">&nbsp;</td>
     <td>&nbsp;</td>
@@ -247,15 +262,20 @@ echo db()->error;
     <td width="84">&nbsp;</td>
   </tr>
 </table>
-	<br></br>
-	<input type="button" value="Refresh" onClick="javascript:location.reload();">
-	<input type="submit" name="Submit" value="ส่งแบบฟอร์ม">
-	<br></br>
+<div class="container">            
+	<ul class="pager">
+    <li class="previous" type="button" value="Refresh"><a href="menu2.php">ย้อนกลับ</a></li>
+	<input type="hidden" name="idautostart" value="<?php echo $idtest; ?>" >
+	<input type="hidden" name="telnow" value="<?php echo $data['telephone']; ?>" >
+    <input a class="btn btn-primary btn-lg" type="submit" value="ส่งแบบฟอร์ม">
+	</ul>
+</div>
 </center>
 	</TR></TBODY></TABLE></br>
 
 </center>
 </form>
+<a style="display:scroll;position:fixed;bottom:5px;right:5px;" class="backtotop" href="#" rel="nofollow" title="Back to Top"><img style="border:0;" src="top.png"/></a>
   <script src="js/jquery-1.11.3.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
  </body>

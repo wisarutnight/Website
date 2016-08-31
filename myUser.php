@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['User']))
 {
 	header('Location: index.html');
 	die();
@@ -30,7 +30,22 @@ body  { background-color : FFFFCC }
     </div>
     <ul class="nav navbar-nav">
       <li><a href="menuUser.php">Home</a></li>
-      <li><a href="form.php">แบบตอบรับ</a></li>
+      <li><a href="
+					<?php
+					$query = db()->query('SELECT status FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
+					$data = $query->fetch_array();
+								{
+								echo db()->error;
+								if ($data['status'] == 2){
+								echo "form.php";
+								}elseif ($data['status'] == 3){
+								echo "form2.php";
+								}
+					?>
+					<?php
+								}
+					?>
+		">แบบตอบรับ</a></li>
       <li class="active"><a href="myUser.php">ข้อมูลส่วนตัว</a></li>
 	  <li><a href="info.php">ติดต่อสอบถาม</a></li>
     </ul>

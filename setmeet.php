@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['status']))
+if(!isset($_SESSION['Admin']))
 {
 	header('Location: index.html');
 	die();
@@ -18,6 +18,34 @@ connect_db();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <link href="style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+//change page
+$("#round").change(function()
+{
+var id=$(this).val();
+var dataString = 'id='+ id;
+$.ajax
+({
+type: "POST",
+url: "../11/setmeet2.php",
+data: dataString,
+cache: false,
+success: function(html)
+{
+$("#show").html(html);
+} 
+});
+
+});
+});
+
+
+
+</script>
+
  </head>
 <style type="text/css">
 
@@ -33,7 +61,7 @@ body  { background-color : FFFFCC }
       <li><a href="menu.php">Home</a></li>
       <li><a href="menu2.php">แบบตอบรับ</a></li>
 	  <li class="active"><a href="setmeet.php">เพิ่มการประชุม</a></li>
-      <li><a href="menu4.php">ประวัติการประชุม</a></li>
+      <li><a href="menu4.php">ส่งอีเมล</a></li>
 	  <li><a href="menu5.php">สถานะการตอบรับ</a></li>
 	  <li><a href="menu6.php">แก้ไขข้อมูลบุคลากร</a></li>
 	  <li><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
@@ -79,72 +107,44 @@ list($round, $date, $time, $place, $statusmeeting) = $query->fetch_row();
 		</div>
 	</div>
    
-	<div class="form-group" >
-	<label  class="col-sm-4 control-label" >ครั้งที่ : </label>
-	<div class="col-sm-4">
-	<input type="number" name="round" class="form-control" value="">
-	 </div>
-	 </div>
-
-	<div class="form-group">
-		<label class="col-sm-4 control-label" >วันที่ : </label>
-		<div class="col-sm-4">
-			<input type="date" name="date" class="form-control" value="">
-		</div>
-	</div>
-	  
-	<div class="form-group">
-		<label class="col-sm-4 control-label" >เวลา : </label>
-			<div class="col-sm-4">
-		<input type="time" name="date" class="form-control" value="">
-		</div>
-	</div>
-	
-	<div class="form-group">
-	<label class="col-sm-4 control-label" >สถานที่ : </label>
-	<div class="col-sm-4">
-		<input type="text" name="place" class="form-control" value="">
-	 </div>
-	 </div>
-
-	<div class="form-group" >
-	<label  class="col-sm-4 control-label" >สถานะ : </label>
-	<div class="col-sm-4">
-		<select class="form-control" id="mtname" name="mtname">
-			<?php 
-					
-				$query = db()->query('SELECT mtname, mtstatus FROM setmeeting');
-				echo db()->error;
-				while ($data = $query->fetch_array())
-				{
-				?>
-					<option value="<?php echo $data['mtstatus'];?>"><?php echo $data['mtname'];?></option>
-				<?php
-				}
-				?>
-		</select>
-	</div>
-	</div>
-
-
 
 <div class="form-group">
-	<div class="col-sm-5"></div>
 	<div class="col-sm-7">
-	<input a class="btn btn-primary btn-lg" type="submit" value="เพิ่ม"></a></div>       
-	
-	<ul class="pager">
-    <li class="previous" type="button" value="Refresh"><a href="menu6.php">ย้อนกลับ</a></li>
-	</ul>
+	<input a class="btn btn-primary btn-lg" type="submit" value="+ เพิ่มการประชุม"></a></div>
+	<div id="show">
+ </div>       
 </div>
-  </form>
-  </div>
-</div>
-  
 
-  </form>
-  </div>
-</div>
+<table class="table table-hover">
+	<tr>
+		<td><center>ครั้งที่ประชุม</center></td>
+		<td><center>วันที่ประชุม</center></td>
+		<td><center>เวลา</center></td>
+		<td><center>สถานที่</center></td>
+		<td><center>สถานะการประชุม</center></td>
+		<td><center>แก้ไข</center></td>
+	</tr>
+<?php 
+	
+$query = db()->query('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart ORDER BY round DESC');
+while(list($idautodatastart, $round, $date, $time, $place, $statusmeeting) = $query->fetch_row())
+{
+?>
+<tr>
+		<td><center><?php echo $round;?></center></td>
+		<td><center><?php echo $date;?></center></td>
+		<td><center><?php echo $time;?></center></td>
+		<td><?php echo $place;?></td>
+		<td><center><?php if ($statusmeeting == 1){ echo "ครั้งล่าสุด";}
+										else{ echo "ครั้งเก่า";}?>
+		</center></td>
+		<td><a href="editmeet.php?idautodatastart=<?php echo $idautodatastart;?>"><center>แก้ไข</center></a></td>
+</tr>
+<?php
+}
+?>
+</table>
+</center>
 
 <div id="footer">
 <center><font color="white">ระบบส่งแบบตอบรับการเข้าประชุมออนไลน์</font>
@@ -153,7 +153,6 @@ list($round, $date, $time, $place, $statusmeeting) = $query->fetch_row();
 	</center></div>
 </div>
   
-<a style="display:scroll;position:fixed;bottom:5px;right:5px;" class="backtotop" href="#" rel="nofollow" title="Back to Top"><img style="border:0;" src="top.png"/></a>
   <script src="js/jquery-1.11.3.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
  </body>
