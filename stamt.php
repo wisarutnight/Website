@@ -7,7 +7,7 @@ if(!isset($_SESSION['Admin']))
 }
 ?>
 <?php
- $_GET['userId'];
+ $_GET['idlog'];
 
 
 ?>
@@ -16,10 +16,16 @@ if(!isset($_SESSION['Admin']))
 include 'config.php';
 connect_db();
 
-$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, telephone, statusnow, category, datein, dateout FROM users WHERE userId = "'.$_GET['userId'].'"');
+/*$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, telephone, statusnow, category, datein, dateout FROM users WHERE userId = "'.$_GET['userId'].'"');
 list($no, $userId, $username, $password, $status, $first, $name, $sername, $position, $tel, $telephone, $statusnow, $category, $datein, $dateout) = $query->fetch_row();
 
+$query = db()->query('SELECT idlog, meeting, nomeeting, other, commentother, statusmeeting, plane, from1, fromtime1, arrive1, arrivetime1, return1, returntime1, Airport1, Airporttime1, telnow, idautodatastart, userId, fromtype FROM tbllog WHERE idlog = "'.$_GET['idlog'].'"');
+list($idlog, $meeting, $nomeeting, $other, $commentother, $statusmeeting, $plane, $from1, $fromtime1, $arrive1, $arrivetime1, $return1, $returntime1, $Airport1, $Airporttime1, $telnow, $idautodatastart, $userId, $fromtype) = $query->fetch_row();*/
 
+$querydata = db()->query('SELECT * FROM tbllog WHERE idlog = "'.$_GET['idlog'].'"');
+echo db()->error;
+while ($data = $querydata->fetch_array())
+{
 ?>
 <!doctype html>
 <html lang="en">
@@ -47,52 +53,17 @@ list($no, $userId, $username, $password, $status, $first, $name, $sername, $posi
 
 
 
-$query = db()->query ('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart');
+$query = db()->query ('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart WHERE idautodatastart= "'.$data['idautodatastart'].'"');
+echo db()->error;
 while(list($idautodatastart, $round, $date, $time, $place, $statusmeeting) = $query->fetch_row())
 {
-echo db()->error;
-if ($statusmeeting == 1){ echo $round;
-$idtest=$idautodatastart;
+	echo $round;echo "<br>";
+	echo "<br>";
+	echo "วันที่  ".$date." เวลา  ".$time." น.";echo "<br>";
+	echo "<br>";
+	echo $place;
 }
-							else{ echo "";}
-?>
-<?php
-}
-?></br>
-			<br>วันที่  <?php $query = db()->query ('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart');
-			while(list($idautodatastart, $round, $date, $time, $place, $statusmeeting) = $query->fetch_row())
-			{
-			echo db()->error;
-			if ($statusmeeting == 1){ echo $date;
-			$date1=$date;
-			}
-							else{ echo "";}?>
-			<?php
-			}
-			?>
-			เวลา  <?php $query = db()->query ('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart');
-			while(list($idautodatastart, $round, $date, $time, $place, $statusmeeting) = $query->fetch_row())
-			{
-			echo db()->error;
-			if ($statusmeeting == 1){ echo $time;
-			$time1=$time;
-			}
-							else{ echo "";}?>
-			<?php
-			}
-			?> น.</br>
-			</br>
-			<br><?php $query = db()->query ('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart');
-			while(list($idautodatastart, $round, $date, $time, $place, $statusmeeting) = $query->fetch_row())
-			{
-			echo db()->error;
-			if ($statusmeeting == 1){ echo $place;
-			$place1=$place;
-			}
-							else{ echo "";}?>
-			<?php
-			}
-			?></br>
+?>			</br>
 			<br>---------------------------------------------</br>
 	</TD>
 	<TR bgColor=FFFFFF>
@@ -105,10 +76,10 @@ $idtest=$idautodatastart;
     <td colspan="3">ชื่อ 
 <?php 
 	
-$query = db()->query('SELECT * FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
-$data = $query->fetch_array();
+$queryuser = db()->query('SELECT * FROM users WHERE userId="'.$data['userId'].'"');
+$datauser = $queryuser->fetch_array();
 	
-	echo $first.$name." ".$sername; 
+	echo $datauser['first'].$datauser['name']." ".$datauser['sername']; 
 echo db()->error;
 
 ?>
@@ -121,100 +92,61 @@ echo db()->error;
   <tr>
     <td>
 <?php
-$query = db()->query('SELECT meeting,
-	nomeeting,
-	other,
-	commentother,
-	statusmeeting,
-	telnow,
-	plane,
-	from1,
-	fromtime1,
-	arrive1,
-	arrivetime1,
-	return1,
-	returntime1,
-	Airport1,
-	Airporttime1,
-	idautodatastart,
-	userId,
-	fromtype FROM tbllog WHERE userId="'.$_GET['userId'].'"');
-list($meeting,
-	$nomeeting,
-	$other,
-	$commentother,
-	$statusmeeting,
-	$telnow,
-	$plane,
-	$from1,
-	$fromtime1,
-	$arrive1,
-	$arrivetime1,
-	$return1,
-	$returntime1,
-	$Airport1,
-	$Airporttime1,
-	$idautodatastart,
-	$userId,
-	$fromtype) = $query->fetch_row();
-			{
-			echo db()->error;
-	if ($meeting == 1){
+if ($data['meeting'] == 1){
 	echo "เข้าร่วมประชุมได้";
-}	if ($meeting == 2){
+}	elseif ($data['meeting'] == 2){
 	echo "เข้าร่วมประชุมทางไกลได้";
 }
-	if ($meeting == 0){
+	elseif ($data['meeting'] == 0){
 	echo "ยังไม่ได้ส่งแบบตอบรับ";
 }
-	elseif ($meeting == 3){
+	elseif ($data['meeting'] == 3){
 	echo "ไม่สามารถเข้าประชุมได้";
 	echo " เนื่องจาก ";
 }
-	if ($nomeeting == 1){
+	
+if ($data['nomeeting'] == 1){
 	echo "ไปราชการ ";
-	echo $other;
+	echo $data['other'];
 }	
-	if ($nomeeting == 2){
+	elseif ($data['nomeeting'] == 2){
 	echo "ลาพัก / ลากิจ / ลาป่วย";
 }
-	elseif ($nomeeting == 3){
+	elseif ($data['nomeeting'] == 3){
 	echo "อื่นๆ ";
-	echo $commentother;
+	echo $data['commentother'];
 }
 
-if ($fromtype == 2){
+if ($data['fromtype'] == 2){
 echo "<br>รายละเอียดเดินทางเข้าประชุม";
 echo "<br>เครื่องบินเดินทาง วันที่ ";
-echo $plane;
+echo $data['plane'];
 
 echo "<br>เดินทางมาจาก ";
-echo $from1;
+echo $data['from1'];
 echo " เวลา ";
-echo $fromtime1;
+echo $data['fromtime1'];
 
 echo "<br>ถึงสนามบิน ";
-echo $arrive1;
+echo $data['arrive1'];
 echo " เวลา ";
-echo $arrivetime1;
+echo $data['arrivetime1'];
 
 echo "<br>เดินทางขากลับจาก ";
-echo $return1;
+echo $data['return1'];
 echo " เวลา ";
-echo $returntime1;
+echo $data['returntime1'];
 
 echo "<br>ถึงสนามบิน ";
-echo $Airport1;
+echo $data['Airport1'];
 echo " เวลา ";
-echo $Airporttime1;
+echo $data['Airporttime1'];
 
 }else{
 echo "";
 }
 
-?>
-<?php
-			}
+
 ?>
 </td>
     
@@ -224,15 +156,15 @@ echo "";
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td colspan="2" align="center">( <?php echo $first.$name." ".$sername; ?> )</td>
+    <td colspan="2" align="center">( <?php echo $datauser['first'].$datauser['name']." ".$datauser['sername']; ?> )</td>
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td colspan="2" align="center"><?php echo $position ?></td>
+    <td colspan="2" align="center"><?php echo $datauser['position'] ?></td>
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td colspan="2" align="center">  หมายเลขโทรศัพท์ที่ติดต่อได้สะดวก  <?php echo $telephone; ?></td>
+    <td colspan="2" align="center">  หมายเลขโทรศัพท์ที่ติดต่อได้สะดวก  <?php echo $datauser['telephone']; ?></td>
   </tr>
 </table>
 </center>
@@ -240,7 +172,7 @@ echo "";
 
 </center>
 </form>
-
+<?php } ?>
 <div class="form-group">
 	<ul class="pager">
     <li class="previous" type="button" value="Refresh"><a href="menu5.php">ย้อนกลับ</a></li>

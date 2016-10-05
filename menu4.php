@@ -39,7 +39,7 @@ body  { background-color : FFFFCC }
 	  <li><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-<?php	$query = db()->query('SELECT * FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
+<?php	$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, statusnow, category, datein, dateout, meet1, rmeet FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 echo db()->error; ?>
       <li><a href="menu3.php"><span class="glyphicon glyphicon-user"></span> <?php echo $data['first']." ".$data['name'];?></a></li>

@@ -11,6 +11,7 @@ connect_db();
 
 <head>
   <meta charset="UTF-8">
+  <title>แบบตอบรับการเข้าประชุมออนไลน์</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -37,7 +38,7 @@ body  { background-color : FFFFCC }
 	  <li><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-<?php	$query = db()->query('SELECT * FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
+<?php	$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, statusnow, category, datein, dateout, meet1, rmeet FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 echo db()->error; ?>
       <li><a href="menu3.php"><span class="glyphicon glyphicon-user"></span> <?php echo $data['first']." ".$data['name'];?></a></li>
@@ -58,16 +59,18 @@ div.iBannerFix{
 </style>
 
 <?php
-$query = db()->query('SELECT statusmeeting FROM tbllog WHERE userId="'.$_SESSION['userIdtest'].'"');
+/*$query = db()->query('SELECT statusmeeting FROM tbllog WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 			{
 			echo db()->error;
-			if ($data['statusmeeting'] == 1){ echo "ส่งแบบตอบรับแล้ว";}
-							else{ echo "ยังไม่ได้ส่งแบบตอบรับ";}
-?>
+			if ($data['statusmeeting'] == 1){ ?> 
+			<table border=0>
+			<tr bgColor=FF0000><td><font color="white"><?php echo "ส่งแบบตอบรับแล้ว";}
+							else{ echo "ยังไม่ได้ส่งแบบตอบรับ";} ?></td></tr></table>
+
 <?php
 			}
-?>
+*/?>
 
 <center>
 <form name="form1" action="finishadmin11.php" method="post" enctype="multipart/form-data">

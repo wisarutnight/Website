@@ -10,6 +10,7 @@ connect_db();
 ?>
 <head>
   <meta charset="UTF-8">
+  <title>แบบตอบรับการเข้าประชุมออนไลน์</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -50,7 +51,7 @@ body  { background-color : FFFFCC }
 	  <li><a href="info.php">ติดต่อสอบถาม</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-<?php	$query = db()->query('SELECT * FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
+<?php	$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, statusnow, category, datein, dateout, meet1, rmeet FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 echo db()->error; ?>
       <li><a href="myUser.php"><span class="glyphicon glyphicon-user"></span> <?php echo $data['first']." ".$data['name'];?></a></li>

@@ -9,6 +9,7 @@ include 'config.php';
 connect_db();
 ?>
 <head>
+  <title>แบบตอบรับการเข้าประชุมออนไลน์</title>
   <meta charset="UTF-8">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,8 +49,8 @@ body  { background-color : FFFFCC }
       <li><a href="myUser.php">ข้อมูลส่วนตัว</a></li>
 	  <li class="active"><a href="info.php">ติดต่อสอบถาม</a></li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
-<?php	$query = db()->query('SELECT * FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
+<ul class="nav navbar-nav navbar-right">
+<?php	$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, statusnow, category, datein, dateout, meet1, rmeet FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 echo db()->error; ?>
       <li><a href="myUser.php"><span class="glyphicon glyphicon-user"></span> <?php echo $data['first']." ".$data['name'];?></a></li>
@@ -71,34 +72,25 @@ div.iBannerFix{
  <body> 
 <?php 
 	
-$query = db()->query('SELECT * FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
+$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, statusnow, category, datein, dateout, meet1, rmeet FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 echo db()->error;
 ?>
-
-<!doctype html>
-<html lang="en"
- <body>
 <center>
-<br><table width="1200" height="411" border=0>
-  <tr bgColor=FFFFFF>
-    <td><table width="591" height="440" border="0" align="left">
-      <tr>
-        <td height="31" colspan="2" align="left" valign="middle">ติดต่อสอบถามงานสภาวิชาการ สำนักส่งเสริมวิชาการและงานทะเบียน มทร.ล้านนา</td>
-      </tr>
-      <tr>
-        <td width="132" height="38" align="left">หมายเลขโทรศัพท์ : </td>
-        <td width="443">๐๕๓ ๙๒๑ ๔๔๔ ต่อ ๑๑๐๔</td>
-      </tr>
-      <tr>
-        <td height="36" align="left">อีเมล : </td>
-        <td>pimparn@rmutl.ac.th</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-      </tr>
-    </table></td>
+<br><table border="0">
+  <tr>
+	<td>	<table border="0">
+			 <tr>
+				<td rowspan="3"><img src="logo1.png"></td>
+			  </tr>
+			  <tr>
+			  <td colspan="2">ติดต่อสอบถามงานสภาวิชาการ สำนักส่งเสริมวิชาการและงานทะเบียน มทร.ล้านนา <br>
+			  <br>หมายเลขโทรศัพท์ : ๐๕๓ ๙๒๑ ๔๔๔ ต่อ ๑๑๐๔ <br>
+			  <br>อีเมล : pimparn@rmutl.ac.th</td>
+			  </tr>
+
+			</table>
+	</td>
   </tr>
 </table></br>
 </center>

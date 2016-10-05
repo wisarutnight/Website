@@ -34,7 +34,7 @@ while(list($no, $userId, $username, $password, $status, $first, $name, $sername,
 		<td><?php echo $position;?></td>
 		<td><center><?php echo $telephone;?></center></td>
 		<?php
-		$query1 = db()->query('SELECT idautodatastart, userId FROM tbllog WHERE idautodatastart="'.$_POST['id'].'" and userId="'.$userId.'"');
+		$query1 = db()->query('SELECT idlog, idautodatastart, userId FROM tbllog WHERE idautodatastart="'.$_POST['id'].'" and userId="'.$userId.'"');
 		echo db()->error;
 		?>
 		<td><?php if($query1->num_rows > 0)
@@ -44,7 +44,8 @@ while(list($no, $userId, $username, $password, $status, $first, $name, $sername,
 				echo "ยังไม่ได้ส่ง";	
 			}
 			?></td>
-		<td><center><a href="stamt.php?userId=<?php echo $userId;?>">ดู</center></a></td>
+		<td><?php 	while(list($idlog, $idautodatastart, $userId) = $query1->fetch_row()) { ?>
+		<center><a href="stamt.php?idlog=<?php echo $idlog;?>">ดู</center></a><?php } ?></td>
 </tr>
 <?php
 }

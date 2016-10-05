@@ -22,7 +22,7 @@ $idautodatastart= $_POST['idautodatastart'];
 $query = db()->query('SELECT idautodatastart FROM tbldatastart WHERE round = "'. $round .'" LIMIT 1');
 if($query->num_rows > 0)
 {
-	die('no duplicate');
+	die('ครั้งที่ประชุมนี้มีอยู่แล้ว');
 }
 $s = sprintf('UPDATE tbldatastart SET 
 round="%s",date="%s",time="%s",place="%s",statusmeeting="%s" WHERE idautodatastart ="%s" LIMIT 1'
