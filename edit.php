@@ -56,7 +56,7 @@ list($no, $userId, $username, $password, $status, $first, $name, $sername, $posi
 	<div class="form-group" >
 	<label  class="col-sm-4 control-label" >ลำดับ : </label>
 	<div class="col-sm-4">
-	<input type="text" name="no" class="form-control" value="<?php echo $no?>">
+	<input type="number" name="no" class="form-control" value="<?php echo $no?>">
 	 </div>
 	 </div>
 

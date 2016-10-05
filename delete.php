@@ -18,6 +18,32 @@ connect_db();
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <link href="style.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+$(document).ready(function()
+{
+//change page
+$("#round").change(function()
+{
+var id=$(this).val();
+var dataString = 'id='+ id;
+$.ajax
+({
+type: "POST",
+url: "../11/delete2.php",
+data: dataString,
+cache: false,
+success: function(html)
+{
+$("#show").html(html);
+} 
+});
+
+});
+});
+
+</script>
+
  </head>
 <style type="text/css">
 
@@ -80,7 +106,7 @@ echo db()->error; ?>
 		<td><center>นามสกุล</center></td>
 		<td><center>ตำแหน่ง</center></td>
 		<td><center>สถานะ</center></td>
-		<td><center>แก้ไขข้อมูล</center></td>
+		<td><center>ลบข้อมูล</center></td>
 	</tr>
 <?php 
 	
@@ -97,7 +123,7 @@ while(list($no, $userId, $username, $password, $status, $first, $name, $sername,
 				  elseif ($status == 2){ echo "User";}
 				  elseif ($status == 3){ echo "User2";}
 				  else { echo "ไม่ได้ลงทะเบียน";}?></td>
-		<td><center><a href="edit.php?userId=<?php echo $userId;?>">แก้ไข </a></center></td>
+		<td><center><a href="delete2.php?userId=<?php echo $userId;?>">ลบ </a></center></td>
 </tr>
 <?php
 }
