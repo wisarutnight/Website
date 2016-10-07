@@ -12,18 +12,32 @@ connect_db();
 <head>
   <meta charset="UTF-8">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-    <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <link href="style.css" rel="stylesheet" type="text/css">
+<meta name="robots" content="noindex, nofollow">
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-43981329-1']);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script');
+ga.type = 'text/javascript';
+ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0];
+s.parentNode.insertBefore(ga, s);
+})();
+</script>
  </head>
 <style type="text/css">
 
 body  { background-color : FFFFCC }
 
-</style>			
+</style>
+<body>
 <link href="style.css" rel="stylesheet">
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
@@ -58,48 +72,72 @@ div.iBannerFix{
     z-index: 99;  
 }  
 </style>
-<div class="container">
-	<div class="row">
-	<form class="form-horizontal">
 
-	<div class="form-group">
-		<div class="col-sm-6"></div>
-		<div class="bg-primary">การประชุม</div>
-		<div class="col-sm-6">
-		</div>
-</div>
+<form action="send3.php" method="post">
+<table border="0" align="center">
+	<tr>
+		<td height="30" width="97" align="right">Mail ผู้ส่ง : </td>
+		<td><input type="text" placeholder="Enter your email ID" name="email"/></td>
+	</tr>
+	<tr>
+		<td height="30" align="right">Password Mail : </td>
+		<td><input type="password" placeholder="Password" name="password"/></td>
+	</tr>
+	<tr>
+		<td height="30" align="right">Mail ผู้รับ : </td>
+		<td><input type="text" placeholder="To : Email Id " name="toid"/></td>
+	</tr>
+	<tr>
+		<td height="30" align="right">หัวข้อ : </td>
+		<td><input type="text" placeholder="Subject : " name="subject"/></td>
+	</tr>
+	<tr>
+		<td height="30" align="right">ข้อความ : </td>
+		<td><textarea rows="4" cols="50" placeholder="Enter Your Message..." name="message"></textarea></td>
+	</tr>
+	<tr>
+		<td><br></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td><input a class="btn btn-primary btn-lg" type="submit" value="Send" name="send"/></td>
+	</tr>
 
-
-<form action="https://api.elasticemail.com/contact/add?version=2" method="post">
-  <fieldset style="border:none;">
-    <input type="hidden" name="publicaccountid" value="73be17af-e494-45c3-a705-b71281737820">
-    <input type="hidden" name="return_url" value="">
-    <input type="hidden" name="activation_return_url" value="">
-    <input type="hidden" name="activation_template" value="แบบตอบรับการเข้าประชุมออนไลน์">
-    <input type="hidden" name="type" value="3">
-    <div>
-      <span id="email">
-        <label for="email">Email
-        </label>
-        <input maxlength="40" class="form-control" name="email" size="20" type="email" required="">
-      </span>
-      <span id="firstname">
-        <label for="firstname">First Name
-        </label>
-        <input maxlength="40" class="form-control" name="firstname" size="20" type="text">
-      </span>
-      <span id="lastname">
-        <label for="lastname">Last Name
-        </label>
-        <input maxlength="40" class="form-control" name="lastname" size="20" type="text">
-      </span>
-    </div>
-    <ul class="lists" style="list-style:none">
-    </ul>
-    <input type="submit" name="submit" value="Subscribe">
-  </fieldset>
+</table>
 </form>
 
+<?php
+require 'PHPMailerAutoload.php';
+if(isset($_POST['send']))
+{
+$email = $_POST['email'];
+$password = $_POST['password'];
+$to_id = $_POST['toid'];
+$message = $_POST['message'];
+$subject = $_POST['subject'];
+$mail = new PHPMailer;
+$mail->isSMTP();
+$mail->Host = 'smtp.gmail.com';
+$mail->Port = 587;
+$mail->SMTPSecure = 'ssl';
+$mail->SMTPAuth = true;
+$mail->Username = $email;
+$mail->Password = $password;
+$mail->addAddress($to_id);
+$mail->Subject = $subject;
+$mail->msgHTML($message);
+if (!$mail->send()) {
+$error = "Mailer Error: " . $mail->ErrorInfo;
+echo '<p id="para">'.$error.'</p>';
+}
+else {
+echo '<p id="para">Message sent!</p>';
+}
+}
+else{
+echo '<p id="para">Please enter valid data</p>';
+}
+?>
 
 <div id="footer">
 <center><font color="white">ระบบส่งแบบตอบรับการเข้าประชุมออนไลน์</font>
@@ -107,3 +145,5 @@ div.iBannerFix{
 		<br><font color="white">ติดต่อสอบถาม : pimparn@rmutl.ac.th</font></br>
 	</center></div>
 </div>
+</body>
+</html>

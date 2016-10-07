@@ -32,7 +32,7 @@ body  { background-color : FFFFCC }
       <li><a href="menu.php">Home</a></li>
       <li class="active"><a href="menu2.php">แบบตอบรับ</a></li>
 	  <li><a href="setmeet.php">เพิ่มการประชุม</a></li>
-      <li><a href="menu4.php">ประวัติการประชุม</a></li>
+      <li><a href="menu4.php">ส่งอีเมล</a></li>
 	  <li><a href="menu5.php">สถานะการตอบรับ</a></li>
 	  <li><a href="menu6.php">แก้ไขข้อมูลบุคลากร</a></li>
 	  <li><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
@@ -77,7 +77,7 @@ $data = $query->fetch_array();
 	<TBODY>
 	<TR bgColor=FFFFFF>
 	<TD onmouseover="mOvr(this,'#6600FF');" onclick=mClk(this); onmouseout=mOut(this); align=center width=120 height=1>
-	<br>การเข้าประชุมสภาวิชาการใหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา</br>
+	<br>การเข้าประชุมสภาวิชาการมหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา</br>
 			<br><form>ครั้งที่  
 <?php $query = db()->query ('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart');
 while(list($idautodatastart, $round, $date, $time, $place, $statusmeeting) = $query->fetch_row())
