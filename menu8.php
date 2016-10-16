@@ -16,8 +16,9 @@ list($no, $userId, $username, $password, $status, $first, $name, $sername, $posi
 
 ?>
 <!doctype html>
-<html lang="en"
+<html lang="en">
  <head>
+ <title>แบบตอบรับการเข้าประชุมออนไลน์</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -230,8 +231,6 @@ while ($data = $query->fetch_array())
   </div>
 </div>
 
-  
-<a style="display:scroll;position:fixed;bottom:5px;right:5px;" class="backtotop" href="#" rel="nofollow" title="Back to Top"><img style="border:0;" src="top.png"/></a>
   <script src="js/jquery-1.11.3.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
  </body>

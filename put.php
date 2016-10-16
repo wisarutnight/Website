@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <title>แบบตอบรับการเข้าประชุมออนไลน์</title>
 </head>
 <?php
 session_start();
@@ -26,6 +28,19 @@ connect_db();
 	$datein= $_POST['datein'];
 	$dateout= $_POST['dateout'];
 	$status= $_POST['status'];
+
+$query = db()->query('SELECT userId FROM users WHERE no = "'. $no .'" LIMIT 1');
+if($query->num_rows > 0)
+{
+	die('<center><br><table border="0"><tr><td colspan="2"><h3>ไม่สามารถเพิ่มข้อมูลได้ อาจมีสาเหตุมาจาก </h></td></tr>
+										<tr><td align="center">-</td>
+											<td>มีเลขที่ลำดับนี้อยู่แล้ว</td>
+										</tr>
+										<tr><td align="center">-</td>
+											<td>กรอกข้อมูลไม่ครบ</td>
+										</tr><br>
+		</table></center>');
+}
 
 db()->query('INSERT INTO users (
 	no,

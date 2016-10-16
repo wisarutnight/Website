@@ -15,7 +15,7 @@ if(!isset($_SESSION['Admin']))
 <?php
 include 'config.php';
 connect_db();
-$query = db()->query('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart');
+$query = db()->query('SELECT idautodatastart, round, date, time, place, statusmeeting FROM tbldatastart WHERE idautodatastart = "'.$_GET['idautodatastart'].'"');
 list($idautodatastart, $round, $date, $time, $place, $statusmeeting) = $query->fetch_row()
 
 ?>

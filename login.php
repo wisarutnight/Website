@@ -1,3 +1,5 @@
+<title>แบบตอบรับการเข้าประชุมออนไลน์</title>
+<link href="style.css" rel="stylesheet" type="text/css">
 <?php
 session_start(); 
 include 'config.php';

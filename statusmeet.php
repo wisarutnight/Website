@@ -9,15 +9,48 @@ include 'config.php';
 connect_db();
 ?>
 <head>
-  <title>แบบตอบรับการเข้าประชุมออนไลน์</title>
   <meta charset="UTF-8">
+  <title>แบบตอบรับการเข้าประชุมออนไลน์</title>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <link href="style.css" rel="stylesheet" type="text/css">
+
+  <script type="text/javascript">
+$(document).ready(function()
+{
+//change page
+$("#round").change(function()
+{
+var id=$(this).val();
+var dataString = 'id='+ id;
+$.ajax
+({
+type: "POST",
+url: "../11/Usermeet.php",
+data: dataString,
+cache: false,
+success: function(html)
+{
+$("#show").html(html);
+} 
+});
+
+});
+});
+
+</script>
+
  </head>
+ <style>
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 40%;
+      margin: auto;
+  }
+  </style>
 <style type="text/css">
 
 body  { background-color : FFFFCC }
@@ -34,23 +67,22 @@ body  { background-color : FFFFCC }
       <li><a href="<?php
 						$query = db()->query('SELECT status FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
 						$data = $query->fetch_array();
-						{
+					{
 						echo db()->error;
 						if ($data['status'] == 2){
 						echo "form.php";
 						}elseif ($data['status'] == 3){
 						echo "form2.php";
-						}
-					?>
-					<?php
 					}
 					?>
-		">แบบตอบรับ</a></li>
+<?php
+			}
+?>">แบบตอบรับ</a></li>
       <li><a href="myUser.php">ข้อมูลส่วนตัว</a></li>
-	  <li><a href="statusmeet.php">สถานะการส่งแบบตอบรับ</a></li>
-	  <li class="active"><a href="info.php">ติดต่อสอบถาม</a></li>
+	  <li class="active"><a href="statusmeet.php">สถานะการส่งแบบตอบรับ</a></li>
+	  <li><a href="info.php">ติดต่อสอบถาม</a></li>
     </ul>
-<ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right">
 <?php	$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, statusnow, category, datein, dateout, meet1, rmeet FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
 $data = $query->fetch_array();
 echo db()->error; ?>
@@ -70,39 +102,36 @@ div.iBannerFix{
     z-index: 99;  
 }  
 </style>
- <body> 
+
+<div class="dropdown">
+<div class="col-sm-4">ครั้งที่
+<select class="form-control" id="round" name="round">
+<option>เลือกครั้งที่ประชุม</option>
 <?php 
 	
-$query = db()->query('SELECT no, userId, username, password, status, first, name, sername, position, tel, statusnow, category, datein, dateout, meet1, rmeet FROM users WHERE userId="'.$_SESSION['userIdtest'].'"');
-$data = $query->fetch_array();
+$query = db()->query('SELECT idautodatastart, round FROM tbldatastart ORDER BY round DESC');
 echo db()->error;
+while ($data = $query->fetch_array())
+{
 ?>
-<center>
-<br><table border="0">
-  <tr>
-	<td>	<table border="0">
-			 <tr>
-				<td rowspan="3"><img src="logo1.png"></td>
-			  </tr>
-			  <tr>
-			  <td colspan="2">ติดต่อสอบถามงานสภาวิชาการ สำนักส่งเสริมวิชาการและงานทะเบียน มทร.ล้านนา <br>
-			  <br>หมายเลขโทรศัพท์ : ๐๕๓ ๙๒๑ ๔๔๔ ต่อ ๑๑๐๔ <br>
-			  <br>อีเมล : pimparn@rmutl.ac.th</td>
-			  </tr>
+<option value="<?php echo $data['idautodatastart'];?>"><?php echo $data['round'];?></option>
+<?php
+}
+?>
+</select>
+	 </div>
+	 </div>
 
-			</table>
-	</td>
-  </tr>
-</table></br>
+<div id="show"></div>
+
 </center>
-  <script src="js/jquery-1.11.3.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
- </body>
- <div id="footer">
+<br></br>
+<br></br>
+<div id="footer">
 <center><font color="white">ระบบส่งแบบตอบรับการเข้าประชุมออนไลน์</font>
 		<font color="white">สภาวิชาการมหาวิทยาลัยเทคโนโลยีราชมงคลล้านนา</font>
 		<br><font color="white">ติดต่อสอบถาม : pimparn@rmutl.ac.th</font></br>
 	</center></div>
 </div>
 
-</html>
+	

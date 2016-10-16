@@ -46,6 +46,7 @@ body  { background-color : FFFFCC }
 								}
 					?>">แบบตอบรับ</a></li>
       <li><a href="myUser.php">ข้อมูลส่วนตัว</a></li>
+	  <li><a href="statusmeet.php">สถานะการส่งแบบตอบรับ</a></li>
 	  <li><a href="info.php">ติดต่อสอบถาม</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
