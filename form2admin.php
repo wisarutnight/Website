@@ -32,7 +32,7 @@ body  { background-color : FFFFCC }
       <li><a href="menu.php">Home</a></li>
       <li class="active"><a href="menu2.php">แบบตอบรับ</a></li>
 	  <li><a href="setmeet.php">เพิ่มการประชุม</a></li>
-      <li><a href="menu4.php">ส่งอีเมล</a></li>
+      <li><a href="menu4.php">ส่งอีเมล์</a></li>
 	  <li><a href="menu5.php">สถานะการตอบรับ</a></li>
 	  <li><a href="menu6.php">แก้ไขข้อมูลบุคลากร</a></li>
 	  <li><a href="menu7.php">รายชื่อคณะกรรมการ</a></li>
@@ -268,7 +268,6 @@ echo db()->error;
 
 </center>
 </form>
-<a style="display:scroll;position:fixed;bottom:5px;right:5px;" class="backtotop" href="#" rel="nofollow" title="Back to Top"><img style="border:0;" src="top.png"/></a>
   <script src="js/jquery-1.11.3.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
  </body>
