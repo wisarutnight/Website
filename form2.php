@@ -268,7 +268,6 @@ echo db()->error;
 </table>
 <div class="container">            
 	<ul class="pager">
-    <li class="previous" type="button" value="Refresh"><a href="menu2.php">ย้อนกลับ</a></li>
 	<input type="hidden" name="idautostart" value="<?php echo $idtest; ?>" >
 	<input type="hidden" name="telnow" value="<?php echo $data['telephone']; ?>" >
     <input a class="btn btn-primary btn-lg" type="submit" value="ส่งแบบฟอร์ม">
@@ -279,7 +278,6 @@ echo db()->error;
 
 </center>
 </form>
-<a style="display:scroll;position:fixed;bottom:5px;right:5px;" class="backtotop" href="#" rel="nofollow" title="Back to Top"><img style="border:0;" src="top.png"/></a>
   <script src="js/jquery-1.11.3.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
  </body>
