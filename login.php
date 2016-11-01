@@ -90,5 +90,8 @@ echo "<meta http-equiv='refresh' content='1;URL=menuUser2.php'>";
 		}
 
 		}*/
+else{
+	echo "<meta http-equiv='refresh' content='1;URL=index.html'>";
+}
 	}
 ?>
